@@ -1,0 +1,64 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 1.469 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "fonos" 
+        xmin = 0 
+        xmax = 1.469 
+        intervals: size = 5 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.4883843603752883 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.4883843603752883 
+            xmax = 0.6342306653380804 
+            text = "A" 
+        intervals [3]:
+            xmin = 0.6342306653380804 
+            xmax = 0.7492248673279742 
+            text = "m" 
+        intervals [4]:
+            xmin = 0.7492248673279742 
+            xmax = 0.8431835445636191 
+            text = "a" 
+        intervals [5]:
+            xmin = 0.8431835445636191 
+            xmax = 1.469 
+            text = "#" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "difonos" 
+        xmin = 0 
+        xmax = 1.469 
+        intervals: size = 6 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.43789910096509105 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.43789910096509105 
+            xmax = 0.5739288277092337 
+            text = "-A" 
+        intervals [3]:
+            xmin = 0.5739288277092337 
+            xmax = 0.6917277663330273 
+            text = "Am" 
+        intervals [4]:
+            xmin = 0.6917277663330273 
+            xmax = 0.8025148633720713 
+            text = "ma" 
+        intervals [5]:
+            xmin = 0.8025148633720713 
+            xmax = 0.9147043287280653 
+            text = "a-" 
+        intervals [6]:
+            xmin = 0.9147043287280653 
+            xmax = 1.469 
+            text = "#" 

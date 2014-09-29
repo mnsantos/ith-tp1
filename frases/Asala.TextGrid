@@ -1,0 +1,80 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 1.638 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "fonos" 
+        xmin = 0 
+        xmax = 1.638 
+        intervals: size = 7 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.3553621420094493 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.3553621420094493 
+            xmax = 0.5039139008934369 
+            text = "A" 
+        intervals [3]:
+            xmin = 0.5039139008934369 
+            xmax = 0.661847876127992 
+            text = "s" 
+        intervals [4]:
+            xmin = 0.661847876127992 
+            xmax = 0.7400330123827223 
+            text = "a" 
+        intervals [5]:
+            xmin = 0.7400330123827223 
+            xmax = 0.8197818513625472 
+            text = "l" 
+        intervals [6]:
+            xmin = 0.8197818513625472 
+            xmax = 0.9245499339438857 
+            text = "a" 
+        intervals [7]:
+            xmin = 0.9245499339438857 
+            xmax = 1.638 
+            text = "#" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "difonos" 
+        xmin = 0 
+        xmax = 1.638 
+        intervals: size = 8 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.28655922210528667 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.28655922210528667 
+            xmax = 0.4288561700888958 
+            text = "-A" 
+        intervals [3]:
+            xmin = 0.4288561700888958 
+            xmax = 0.5774079289728833 
+            text = "As" 
+        intervals [4]:
+            xmin = 0.5774079289728833 
+            xmax = 0.7025041469804518 
+            text = "sa" 
+        intervals [5]:
+            xmin = 0.7025041469804518 
+            xmax = 0.7900714995857497 
+            text = "al" 
+        intervals [6]:
+            xmin = 0.7900714995857497 
+            xmax = 0.8729477440157638 
+            text = "la" 
+        intervals [7]:
+            xmin = 0.8729477440157638 
+            xmax = 0.9917891511229538 
+            text = "a-" 
+        intervals [8]:
+            xmin = 0.9917891511229538 
+            xmax = 1.638 
+            text = "#" 

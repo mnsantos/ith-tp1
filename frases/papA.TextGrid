@@ -1,0 +1,72 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 2.184 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "fonos" 
+        xmin = 0 
+        xmax = 2.184 
+        intervals: size = 6 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.7657073646969257 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.7657073646969257 
+            xmax = 0.8303404106675027 
+            text = "p" 
+        intervals [3]:
+            xmin = 0.8303404106675027 
+            xmax = 0.9721161244094136 
+            text = "a" 
+        intervals [4]:
+            xmin = 0.9721161244094136 
+            xmax = 1.0367491703799907 
+            text = "p" 
+        intervals [5]:
+            xmin = 1.0367491703799907 
+            xmax = 1.1785248841219016 
+            text = "A" 
+        intervals [6]:
+            xmin = 1.1785248841219016 
+            xmax = 2.184 
+            text = "#" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "difonos" 
+        xmin = 0 
+        xmax = 2.184 
+        intervals: size = 7 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.7177538144606911 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.7177538144606911 
+            xmax = 0.7969814191988178 
+            text = "-p" 
+        intervals [3]:
+            xmin = 0.7969814191988178 
+            xmax = 0.8720391500033589 
+            text = "pa" 
+        intervals [4]:
+            xmin = 0.8720391500033589 
+            xmax = 1.0075600528448914 
+            text = "ap" 
+        intervals [5]:
+            xmin = 1.0075600528448914 
+            xmax = 1.1159767751181173 
+            text = "pA" 
+        intervals [6]:
+            xmin = 1.1159767751181173 
+            xmax = 1.2598374258268212 
+            text = "A-" 
+        intervals [7]:
+            xmin = 1.2598374258268212 
+            xmax = 2.184 
+            text = "#" 

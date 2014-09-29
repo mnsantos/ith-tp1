@@ -1,0 +1,88 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 1.625 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "fonos" 
+        xmin = 0 
+        xmax = 1.625 
+        intervals: size = 8 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.4068370410592863 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.4068370410592863 
+            xmax = 0.4281372556820806 
+            text = "l" 
+        intervals [3]:
+            xmin = 0.4281372556820806 
+            xmax = 0.5146452475413744 
+            text = "a" 
+        intervals [4]:
+            xmin = 0.5146452475413744 
+            xmax = 0.6342091387290164 
+            text = "p" 
+        intervals [5]:
+            xmin = 0.6342091387290164 
+            xmax = 0.8466108748388272 
+            text = "A" 
+        intervals [6]:
+            xmin = 0.8466108748388272 
+            xmax = 0.899359650362787 
+            text = "k" 
+        intervals [7]:
+            xmin = 0.899359650362787 
+            xmax = 1.0490720888659995 
+            text = "a" 
+        intervals [8]:
+            xmin = 1.0490720888659995 
+            xmax = 1.625 
+            text = "#" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "difonos" 
+        xmin = 0 
+        xmax = 1.625 
+        intervals: size = 9 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.37152023661969724 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.37152023661969724 
+            xmax = 0.4179391590807817 
+            text = "-l" 
+        intervals [3]:
+            xmin = 0.4179391590807817 
+            xmax = 0.48405095773747786 
+            text = "la" 
+        intervals [4]:
+            xmin = 0.48405095773747786 
+            xmax = 0.5797020706875914 
+            text = "ap" 
+        intervals [5]:
+            xmin = 0.5797020706875914 
+            xmax = 0.7034858639171501 
+            text = "pA" 
+        intervals [6]:
+            xmin = 0.7034858639171501 
+            xmax = 0.8708753115798488 
+            text = "Ak" 
+        intervals [7]:
+            xmin = 0.8708753115798488 
+            xmax = 0.9637131565020177 
+            text = "ka" 
+        intervals [8]:
+            xmin = 0.9637131565020177 
+            xmax = 1.1353225062066332 
+            text = "a-" 
+        intervals [9]:
+            xmin = 1.1353225062066332 
+            xmax = 1.625 
+            text = "#" 

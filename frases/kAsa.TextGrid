@@ -1,0 +1,72 @@
+File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0 
+xmax = 1.339 
+tiers? <exists> 
+size = 2 
+item []: 
+    item [1]:
+        class = "IntervalTier" 
+        name = "fonos" 
+        xmin = 0 
+        xmax = 1.339 
+        intervals: size = 6 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.3198945427200191 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.3198945427200191 
+            xmax = 0.40042523306239125 
+            text = "k" 
+        intervals [3]:
+            xmin = 0.40042523306239125 
+            xmax = 0.48095592340476345 
+            text = "A" 
+        intervals [4]:
+            xmin = 0.48095592340476345 
+            xmax = 0.6803652518715898 
+            text = "s" 
+        intervals [5]:
+            xmin = 0.6803652518715898 
+            xmax = 0.8222526586652933 
+            text = "a" 
+        intervals [6]:
+            xmin = 0.8222526586652933 
+            xmax = 1.339 
+            text = "#" 
+    item [2]:
+        class = "IntervalTier" 
+        name = "difonos" 
+        xmin = 0 
+        xmax = 1.339 
+        intervals: size = 7 
+        intervals [1]:
+            xmin = 0 
+            xmax = 0.27515527030759007 
+            text = "#" 
+        intervals [2]:
+            xmin = 0.27515527030759007 
+            xmax = 0.35824249050210105 
+            text = "-k" 
+        intervals [3]:
+            xmin = 0.35824249050210105 
+            xmax = 0.45155583010516726 
+            text = "kA" 
+        intervals [4]:
+            xmin = 0.45155583010516726 
+            xmax = 0.5729909980817602 
+            text = "As" 
+        intervals [5]:
+            xmin = 0.5729909980817602 
+            xmax = 0.7404437033968516 
+            text = "sa" 
+        intervals [6]:
+            xmin = 0.7404437033968516 
+            xmax = 0.9321834423072616 
+            text = "a-" 
+        intervals [7]:
+            xmin = 0.9321834423072616 
+            xmax = 1.339 
+            text = "#" 
