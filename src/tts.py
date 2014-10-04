@@ -50,40 +50,65 @@ def gen_script(array, output):
     s = s + '../src/' + output + '"'
   text_file.write(s)
 
-# NAME: pitch_tier_to_array
-# OUT: array
-# La funcion abre el archivo "12345.PitchTier" y devuelve 
-# un array con los valores de los campos "value" del archivo.
+# NAME: read_pitch_tier
+# OUT: PitchTier
+# La funcion abre el archivo "12345.PitchTier", examina los
+# campos xmin, xmax, y los atributos "number" y "value" de
+# cada punto y los almacena en una clase llamada Pitchier
+# que se encuentra declarada debajo de este comentario.
 
-def pitch_tier_to_array():
+class PitchTier:
+  def __init__(self):
+    self.points = []
+    self.values = []
+    self.xmin = ""
+    self.xmax = ""
+
+def read_pitch_tier():
   text_file = open("12345.PitchTier", "r")
   lines = text_file.readlines()
-  values = []
+  pitch = PitchTier()
   for line in lines:
+    if "xmin" in line:
+      l = line.split()
+      pitch.xmin = l[-1]
+    if "xmax" in line:
+      l = line.split()
+      pitch.xmax = l[-1]
+    if "number" in line:
+      l = line.split()
+      pitch.points.append(l[-1])
     if "value" in line:
       l = line.split()
-      values.append(l[-1])
-  return values
+      pitch.values.append(l[-1])
+  return pitch
 
-# NAME: array_to_pitch_tier
-# IN: array de values
+# NAME: save_modified_pitch_tier
+# IN: PitchTier
 # OUT: "12345.PitchTier"
-# La funcion toma un array de values y reemplaza los campos
-# "value" del archivo "12345.PitchTier" por los del array. 
+# La funcion crea un archivo PitchTier con los valores
+# del Pitch pasado como parametro. 
 
-def array_to_pitch_tier(array):
-  text_file = open("12345.PitchTier", "r")
-  lines = text_file.readlines()
-  j = 0
-  for i in range(0,len(lines)):
-    if "value" in lines[i]:
-      l = lines[i].split()
-      l[-1] = array[j] + " \n"
-      lines[i] = '    ' + ' '.join(l)
-      j = j + 1
-  s = ''.join(lines)
+def save_modified_pitch_tier(pitch):
+  s = 'File type = "ooTextFile"\n' + \
+      'Object class = "PitchTier"\n\n' + \
+      'xmin = ' + pitch.xmin + '\n' + \
+      'xmax = ' + pitch.xmax + '\n' + \
+      'points: size = ' + str(len(pitch.points)) + '\n'
+  for i in range(0,len(pitch.points)):
+    s = s + 'points [' + str(i+1) + ']:\n' + \
+            '    number = ' + pitch.points[i] + '\n' + \
+            '    value = ' + pitch.values[i] + '\n' 
   file = open("12345.PitchTier", "w")
   file.write(s)
+
+# NAME: change_pitch_tier
+# IN: PitchTier
+# OUT: PitchTier
+# La funcion modifica el PitchTier de entrada y lo retorna.
+
+def change_pitch_tier(pitch):
+  return pitch
 
 # NAME: add_prosodia
 # IN: wav file
@@ -93,15 +118,8 @@ def array_to_pitch_tier(array):
 
 def add_prosodia(output):
   os.system("./../praat extraer-pitch-track.praat " + output + " 12345.PitchTier 50 300")
-  values = pitch_tier_to_array()
-
-## Modificamos los values ##
-
-  values = [str(160) for value in values]
-
-############################
-
-  array_to_pitch_tier(values)
+  pitch_tier = change_pitch_tier(read_pitch_tier())
+  save_modified_pitch_tier(pitch_tier)
   os.system("./../praat reemplazar-pitch-track.praat " + output + " 12345.PitchTier " + output + " 50 300")
 
 if __name__ == '__main__':
@@ -133,6 +151,6 @@ if __name__ == '__main__':
 
   if pregunta:
     add_prosodia(output)
+    os.system('rm 12345.PitchTier')
 
   os.system('rm ../difonos/script.praat')
-  os.system('rm 12345.PitchTier')
