@@ -110,43 +110,59 @@ def save_modified_pitch_tier(pitch):
 # OUT: PitchTier
 # La funcion modifica el PitchTier de entrada y lo retorna.
 
-def value_mas_cercano(x, values):
-  min = 999999
-  for key in values:
-    if abs(float(key)-float(x)) < min:
-      min = abs(float(key)-float(x))
-      min_key = key
-  return float(values[min_key])
-
-def delete_rango(rango, values):
+def puntos_en_rango(rango, values):
+  points = []
   for key in values.keys():
     if float(key) >= rango[0] and float(key) <= rango[1]:
-      del values[key]
+      points.append(key)
+  points.sort()
+  return points
 
-def change_pitch_tier(pitch, difonos):
+def dame_rangos(pitch, difonos):
   di_prom = pitch.xmax/float(len(difonos))
-  rangos = []
-  rango = []
   x = 0
+  rangos_A = []
+  rangos_a = []
+  rango_A = []
+  rango_a = []
   for difono in difonos:      
     if "A" in difono:
-      if len(rango) == 1:
-        rango.append(x + di_prom)
-        rangos.append(rango)
-        rango = []
-      elif len(rango) == 0:
-        rango.append(x)
+      if len(rango_A) == 1:
+        rango_A.append(x + di_prom)
+        rangos_A.append(rango_A)
+        rango_A = []
+      elif len(rango_A) == 0:
+        rango_A.append(x)
+    if "a" in difono:
+      if len(rango_a) == 1:
+        rango_a.append(x + di_prom)
+        rangos_a.append(rango_a)
+        rango_a = []
+      elif len(rango_a) == 0:
+        rango_a.append(x)
     x = x + di_prom
-  for rango in rangos:
-    a = 10
-    b = value_mas_cercano(rango[0],pitch.values)
-    c = 10
-    largo_intervalos = (rango[1]-rango[0])/float(c)
-    points = [rango[0] + i * largo_intervalos for i in range(0, c)]
-    delete_rango(rango, pitch.values)
-    for i in range(0,c):
-      f = a * i + b
-      pitch.values[points[i]] = f
+  rangos = [rangos_A, rangos_a]
+  return rangos
+
+def change_pitch_tier(pitch, difonos):
+  rangos = dame_rangos(pitch, difonos)
+  print rangos
+  rangos_A = rangos[0]
+  rangos_a = rangos[1]
+  for rango in rangos_a:
+    a = 2
+    puntos = puntos_en_rango(rango, pitch.values)
+    b = pitch.values[puntos[0]]
+    for i in range(0,len(puntos)):
+      f = i**2 + b
+      #pitch.values[puntos[i]] = f
+  for rango in rangos_A:
+    a = 6
+    puntos = puntos_en_rango(rango, pitch.values)
+    b = pitch.values[puntos[0]]
+    for i in range(0,len(puntos)):
+      f = 0.25 * a**2 * i + b
+      pitch.values[puntos[i]] = f
   return pitch
 
 # NAME: add_prosodia
@@ -156,11 +172,11 @@ def change_pitch_tier(pitch, difonos):
 # reemplazando el wav original.
 
 def add_prosodia(output, difonos):
-  os.system("./../praat extraer-pitch-track.praat " + output + " 12345.PitchTier 50 300")
+  os.system("./../praat extraer-pitch-track.praat " + output + " 12345.PitchTier 75 500")
   pitch_tier = read_pitch_tier()
   pitch_tier = change_pitch_tier(pitch_tier, difonos)
   save_modified_pitch_tier(pitch_tier)
-  os.system("./../praat reemplazar-pitch-track.praat " + output + " 12345.PitchTier " + output + " 50 300")
+  os.system("./../praat reemplazar-pitch-track.praat " + output + " 12345.PitchTier " + output + " 75 500")
 
 if __name__ == '__main__':
 
@@ -173,6 +189,7 @@ if __name__ == '__main__':
 # Obtenemos los difonos del texto.
 
   difonos = split(texto)
+  print difonos
 
 # Verificamos si el texto es una pregunta o no.
 
@@ -191,6 +208,6 @@ if __name__ == '__main__':
 
   if pregunta:
     add_prosodia(output, difonos)
-    os.system('rm 12345.PitchTier')
+    #os.system('rm 12345.PitchTier')
 
   os.system('rm ../difonos/script.praat')
