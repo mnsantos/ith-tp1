@@ -87,8 +87,8 @@ def read_pitch_tier():
 # NAME: save_modified_pitch_tier
 # IN: PitchTier
 # OUT: "12345.PitchTier"
-# La funcion crea un archivo PitchTier con los valores
-# del Pitch pasado como parametro. 
+# La funcion crea un archivo "12345.PitchTier" en base a los atributos
+# del objeto PitchTier pasado como parametro. 
 
 def save_modified_pitch_tier(pitch):
   s = 'File type = "ooTextFile"\n' + \
@@ -105,78 +105,126 @@ def save_modified_pitch_tier(pitch):
   file = open("12345.PitchTier", "w")
   file.write(s)
 
+# NAME: inicializar_puntos
+# IN: PitchTier
+# OUT: array de puntos
+# La funcion toma el objeto PitchTier de entrada y calcula la cantidad
+# de puntos que tiene cada silaba del texto a sintetizar. Para ello
+# toma en cuenta la duracion total de los difonos que componen el texto
+# y se fija en que silaba se encuentra cada punto.
+
+def inicializar_puntos(pitch):
+  puntos_por_silaba = []
+  n = len(texto)
+  silabas = n/2
+  silaba_t = pitch.xmax/float(silabas)
+  silaba_actual = 0
+  cont = 0
+  for key, value in sorted(pitch.values.items()):
+    silaba_anterior = silaba_actual
+    silaba_actual = int(key/silaba_t)
+    if (silaba_anterior != silaba_actual):
+      puntos_por_silaba.append(cont)
+      cont = 1
+    else:
+      cont = cont + 1
+  puntos_por_silaba.append(cont)
+  return puntos_por_silaba
+
+# NAME: func
+# IN: a,b,c
+# OUT: int
+# La funcion calcula f=a*b^2+c
+
+def func(a, b, c):
+  return a*b**2+c
+
 # NAME: change_pitch_tier
 # IN: PitchTier
 # OUT: PitchTier
-# La funcion modifica el PitchTier de entrada y lo retorna.
+# La funcion modifica el objeto PitchTier de entrada y lo retorna. Para
+# mas informacion, leer el README que se encuentra en este directorio.  
 
-def puntos_en_rango(rango, values):
-  points = []
-  for key in values.keys():
-    if float(key) >= rango[0] and float(key) <= rango[1]:
-      points.append(key)
-  points.sort()
-  return points
+def change_pitch_tier(pitch, texto):
+  n = len(texto)
+  silabas = n/2
+  silaba_t = pitch.xmax/float(silabas)
+  puntos_por_silaba = inicializar_puntos(pitch)
+ 
+  silaba_actual = 0
+  punto = 0
+  for key, value in sorted(pitch.values.items()):
 
-def dame_rangos(pitch, difonos):
-  di_prom = pitch.xmax/float(len(difonos))
-  x = 0
-  rangos_A = []
-  rangos_a = []
-  rango_A = []
-  rango_a = []
-  for difono in difonos:      
-    if "A" in difono:
-      if len(rango_A) == 1:
-        rango_A.append(x + di_prom)
-        rangos_A.append(rango_A)
-        rango_A = []
-      elif len(rango_A) == 0:
-        rango_A.append(x)
-    if "a" in difono:
-      if len(rango_a) == 1:
-        rango_a.append(x + di_prom)
-        rangos_a.append(rango_a)
-        rango_a = []
-      elif len(rango_a) == 0:
-        rango_a.append(x)
-    x = x + di_prom
-  rangos = [rangos_A, rangos_a]
-  return rangos
+    if silabas == 1:
+      if texto[n-1] == 'A':
+        a = 85.0/(puntos_por_silaba[0]**2)
+      else:
+        a = 35.0/(puntos_por_silaba[0]**2)
+      f = a * punto**2 + 115
+      pitch.values[key] = f
+      punto = punto + 1
 
-def change_pitch_tier(pitch, difonos):
-  rangos = dame_rangos(pitch, difonos)
-  print rangos
-  rangos_A = rangos[0]
-  rangos_a = rangos[1]
-  for rango in rangos_a:
-    a = 2
-    puntos = puntos_en_rango(rango, pitch.values)
-    b = pitch.values[puntos[0]]
-    for i in range(0,len(puntos)):
-      f = i**2 + b
-      #pitch.values[puntos[i]] = f
-  for rango in rangos_A:
-    a = 6
-    puntos = puntos_en_rango(rango, pitch.values)
-    b = pitch.values[puntos[0]]
-    for i in range(0,len(puntos)):
-      f = 0.25 * a**2 * i + b
-      pitch.values[puntos[i]] = f
+    else:
+      silaba_anterior = silaba_actual
+      silaba_actual = int(key/silaba_t)
+      if (silabas%2 == 1 and silaba_actual != 0) or silabas%2 == 0:
+      
+        if (silaba_anterior != silaba_actual):
+          punto = 0
+
+# Seteamos la prosodia final separando en 4 casos posibles, segun las vocales:
+
+        punto = punto + 1
+
+        if ((silabas%2 == 1 and silaba_actual%2 == 1) or (silabas%2 == 0 and silaba_actual%2 == 0)):
+
+          if texto[2*silaba_actual+1] == 'A' and texto[2*(silaba_actual+1)+1] == 'A':
+            a = 85.0/(puntos_por_silaba[silaba_actual]**2)
+            a1 = 85.0/(puntos_por_silaba[silaba_actual+1]**2)
+            c = 110
+            pitch.values[key] = func(a,punto,c)
+            empezar_por_final = 0
+
+          if texto[2*silaba_actual+1] == 'a' and texto[2*(silaba_actual+1)+1] == 'A':
+            a1 = 85.0/(puntos_por_silaba[silaba_actual+1]**2)
+            c = 115
+            empezar_por_final = 0
+
+          if texto[2*silaba_actual+1] == 'A' and texto[2*(silaba_actual+1)+1] == 'a':
+            a = 85.0/(puntos_por_silaba[silaba_actual]**2)
+            c = 110
+            a1 = 85.0/(puntos_por_silaba[silaba_actual+1]**2)
+            empezar_por_final = 1
+            pitch.values[key] = func(a,punto,c)
+
+          if texto[2*silaba_actual+1] == 'a' and texto[2*(silaba_actual+1)+1] == 'a':
+            a = 35.0/(puntos_por_silaba[silaba_actual]**2)
+            c = 110
+            a1 = 35.0/(puntos_por_silaba[silaba_actual+1]**2)
+            empezar_por_final = 1
+            pitch.values[key] = func(a,punto,c)
+
+        else:
+          if empezar_por_final:
+            pitch.values[key] = func(a1, puntos_por_silaba[silaba_actual]-punto, c)
+          else:
+            pitch.values[key] = func(a1,punto,c)
+
   return pitch
 
 # NAME: add_prosodia
-# IN: wav file
+# IN: output y texto
 # OUT: wav file
-# La funcion toma un wav sin prosodia y se la agrega
-# reemplazando el wav original.
+# La funcion toma el output y texto del wav sintetizado. Extrae el PitchTrack
+# con un script de Praat, lo modifica y finalmente lo reemplaza con otro
+# script de Praat. El resultado es un wav con la prosodia modificada.
 
-def add_prosodia(output, difonos):
-  os.system("./../praat extraer-pitch-track.praat " + output + " 12345.PitchTier 75 500")
+def add_prosodia(output, texto):
+  os.system("./../praat extraer-pitch-track.praat " + output + " 12345.PitchTier 50 300")
   pitch_tier = read_pitch_tier()
-  pitch_tier = change_pitch_tier(pitch_tier, difonos)
+  pitch_tier = change_pitch_tier(pitch_tier, texto)
   save_modified_pitch_tier(pitch_tier)
-  os.system("./../praat reemplazar-pitch-track.praat " + output + " 12345.PitchTier " + output + " 75 500")
+  os.system("./../praat reemplazar-pitch-track.praat " + output + " 12345.PitchTier " + output + " 50 300")
 
 if __name__ == '__main__':
 
@@ -184,12 +232,11 @@ if __name__ == '__main__':
 
 # El output deberia ser pasado como parametro.
 
-  output = "../palabras/" + texto + ".wav"
+  output = sys.argv[2]
 
 # Obtenemos los difonos del texto.
 
   difonos = split(texto)
-  print difonos
 
 # Verificamos si el texto es una pregunta o no.
 
@@ -200,14 +247,15 @@ if __name__ == '__main__':
 
   gen_script(difonos, output)
 
-# Combinamos los difonos del texto.
+# Combinamos los difonos del texto con el
+# script  de Praat recien creado.
 
   os.system('./../praat ../difonos/script.praat')
 
-# Agregamos la prosodia en caso de ser necesario.
+# Agregamos la prosodia en caso de tratarse de una pregunta.
 
   if pregunta:
-    add_prosodia(output, difonos)
-    #os.system('rm 12345.PitchTier')
+    add_prosodia(output, texto[:len(texto)-1])
+    os.system('rm 12345.PitchTier')
 
   os.system('rm ../difonos/script.praat')
